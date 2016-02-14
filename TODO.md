@@ -1,0 +1,5 @@
+- Replace regex work with esprima parsing of code.
+- Caching of built objects in a 'context' that allows for graceful recursive defs.
+- Test coverage of input validation scenarios.
+- Move private functions out of public container class.
+- ES3/5 transpile with babel.
