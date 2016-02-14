@@ -1,0 +1,43 @@
+{
+  "name": "somersault",
+  "version": "0.0.1",
+  "description": "Simple framework for Inversion of Control in NodeJS",
+  "main": "index.js",
+  "scripts": {
+    "test": "gulp"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/steve-gray/somersault.git"
+  },
+  "keywords": [
+    "ioc",
+    "inversion",
+    "of",
+    "control",
+    "dependency",
+    "injection",
+    "di",
+    "framework"
+  ],
+  "author": "Steve Gray",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/steve-gray/somersault/issues"
+  },
+  "homepage": "https://github.com/steve-gray/somersault#readme",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "config": "^1.19.0",
+    "eslint-config-airbnb": "^4.0.0",
+    "eslint-plugin-react": "^3.16.1",
+    "gulp": "^3.9.0",
+    "gulp-esdoc": "^0.2.0",
+    "gulp-eslint": "^1.1.1",
+    "gulp-istanbul": "^0.10.3",
+    "gulp-mocha": "^2.2.0"
+  },
+  "engines": {
+    "node": ">=4.0.0"
+  }
+}
