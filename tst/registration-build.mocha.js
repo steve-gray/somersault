@@ -6,42 +6,64 @@ const expect = chai.expect;
 const lib = require('../lib');
 
 
-class BottomClass {
+const arrowNoDependencies = () => 1;
+
+class ClassNoDependencies {
   constructor() {
-    this.value = 5;
+    this.value = 2;
   }
 }
 
-function returnsValue() {
+function functionNoDependencies() {
   return 3;
 }
 
-class MiddleClass {
-  constructor(bottomClass, someFunction) {
-    this.value = bottomClass.value + someFunction;
-    expect(this.value).to.equal(8);
+const arrowWithDependencies = (noDepsFunction) => {
+  if (!noDepsFunction) {
+    throw new Error('Did not recieve noDepsFunction');
+  }
+  expect(noDepsFunction).to.equal(3);
+  return noDepsFunction + 6;
+};
+
+class ClassWithDependencies {
+  constructor(noDepsClass, noDepsFunction) {
+    if (!noDepsClass) {
+      throw new Error('Did not recieve noDepsFunction');
+    } else if (!noDepsFunction) {
+      throw new Error('Did not recieve noDepsFunction');
+    }
+    expect(noDepsClass.value).to.equal(2);
+    expect(noDepsFunction).to.equal(3);
+    this.value = noDepsClass.value + noDepsFunction + 2; // 7
   }
 }
 
-const arrowNoArgs = () => 3;
-
-function returnsChild(arglessArrow) {
-  expect(arglessArrow).to.equal(3);
-  return arglessArrow + 1;
+function functionWithDependencies(noDepsArrow) {
+  if (!noDepsArrow) {
+    throw new Error('Did not recieve noDepsArrow');
+  }
+  expect(noDepsArrow).to.equal(1);
+  return noDepsArrow + 4;
 }
 
-const arrowArgs = (paramFunc) => paramFunc;
-
 class RootClass {
-  constructor(middleClass, someArrow, paramFunc) {
-    this.middleClass = middleClass;
-    expect(middleClass.value).to.equal(8);
-    this.someArrow = someArrow;
-    expect(someArrow).to.equal(4);
-    this.paramFunc = paramFunc;
-    expect(paramFunc).to.equal(4);
-    this.value = middleClass.value + someArrow + paramFunc;
-    expect(this.value).to.equal(16);
+  constructor(depsClass, depsArrow, depsFunction) {
+    if (!depsClass) {
+      throw new Error('Did not recieve depsClass');
+    } else if (!depsArrow) {
+      throw new Error('Did not recieve depsArrow');
+    } else if (!depsFunction) {
+      throw new Error('Did not recieve depsFunction');
+    }
+    this.depsClass = depsClass;
+    expect(depsClass.value).to.equal(7);
+    this.depsArrow = depsArrow;
+    expect(depsArrow).to.equal(9);
+    this.depsFunction = depsFunction;
+    expect(depsFunction).to.equal(5);
+    this.value = depsClass.value + depsArrow + depsFunction;
+    expect(this.value).to.equal(21);
   }
 }
 
@@ -54,51 +76,51 @@ describe('Build Tests', () => {
 
   describe('Simple registration tests', () => {
     it('Should resolve simple/argless class', () => {
-      container.register('bottomClass', BottomClass);
-      const result = container.resolve('bottomClass').value;
-      expect(result).to.equal(5);
+      container.register('noDepsClass', ClassNoDependencies);
+      const result = container.resolve('noDepsClass').value;
+      expect(result).to.equal(2);
     });
 
     it('Should resolve simple/argless arrow', () => {
-      container.register('arglessArrow', arrowNoArgs);
-      const result = container.resolve('arglessArrow');
-      expect(result).to.equal(3);
+      container.register('noDepsArrow', arrowNoDependencies);
+      const result = container.resolve('noDepsArrow');
+      expect(result).to.equal(1);
     });
 
     it('Should resolve simple/argless function', () => {
-      container.register('someFunction', returnsValue);
-      const result = container.resolve('someFunction');
+      container.register('noDepsFunction', functionNoDependencies);
+      const result = container.resolve('noDepsFunction');
       expect(result).to.equal(3);
     });
 
     it('Should resolve class with arguments', () => {
-      container.register('middleClass', MiddleClass);
-      container.register('someFunction', returnsValue);
-      container.register('bottomClass', BottomClass);
-      const result = container.resolve('middleClass').value;
-      expect(result).to.equal(8);
+      container.register('depsClass', ClassWithDependencies);
+      container.register('noDepsFunction', functionNoDependencies);
+      container.register('noDepsClass', ClassNoDependencies);
+      const result = container.resolve('depsClass').value;
+      expect(result).to.equal(7);
     });
 
     it('Should resolve function with arguments', () => {
-      container.register('paramFunc', returnsChild);
-      container.register('arglessArrow', arrowNoArgs);
-      const result = container.resolve('paramFunc');
-      expect(result).to.equal(4);
+      container.register('depsFunction', functionWithDependencies);
+      container.register('noDepsArrow', arrowNoDependencies);
+      const result = container.resolve('depsFunction');
+      expect(result).to.equal(5);
     });
   });
 
   describe('Nightmare Scenario', () => {
     it('Should correctly add up', () => {
-      container.register('rootClass', RootClass);         // Complex class
-      container.register('middleClass', MiddleClass);     // Class with mixed params
-      container.register('bottomClass', BottomClass);     // Class, No params
-      container.register('paramFunc', returnsChild);      // Func with params
-      container.register('someFunction', returnsValue);   // Func, no params
-      container.register('someArrow', arrowArgs);         // Arrow with args
-      container.register('arglessArrow', arrowNoArgs);    // Arrow without args
+      container.register('rootClass', RootClass);                     // Complex class
+      container.register('depsClass', ClassWithDependencies);         // Class with mixed params
+      container.register('noDepsClass', ClassNoDependencies);         // Class, No params
+      container.register('depsFunction', functionWithDependencies);   // Func with params
+      container.register('noDepsFunction', functionNoDependencies);   // Func, no params
+      container.register('depsArrow', arrowWithDependencies);         // Arrow with args
+      container.register('noDepsArrow', arrowNoDependencies);         // Arrow without args
 
       const result = container.resolve('rootClass').value;
-      expect(result).to.equal(16);
+      expect(result).to.equal(21);
     });
   });
 });
