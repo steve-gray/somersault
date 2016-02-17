@@ -1,0 +1,14 @@
+{
+  "name": "simple-example-app",
+  "version": "0.0.1",
+  "description": "Example app showing somersault IoC",
+  "main": "simple.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Steve Gray",
+  "license": "MIT",
+  "dependencies": {
+    "esprima": "^2.7.2"
+  }
+}

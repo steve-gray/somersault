@@ -1,6 +1,6 @@
 'use strict';
 
-const somersault = require('../lib');
+const somersault = require('../../lib');
 
 const container = somersault.createContainer();
 
