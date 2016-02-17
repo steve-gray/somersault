@@ -1,6 +1,6 @@
 {
   "name": "somersault",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Simple framework for Inversion of Control in NodeJS",
   "main": "index.js",
   "scripts": {
@@ -18,7 +18,10 @@
     "dependency",
     "injection",
     "di",
-    "framework"
+    "framework",
+    "es6",
+    "ECMAScript6",
+    "es2015"
   ],
   "author": "Steve Gray",
   "license": "MIT",
