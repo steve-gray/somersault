@@ -12,16 +12,19 @@ describe('Internals', () => {
         expect(ParserHelpers.isArrowFunction({ foo: 'bar' })).to.equal(false);
       });
     });
+
     describe('isClass', () => {
       it('Should return false on mismatching parse tree', () => {
         expect(ParserHelpers.isClass({ foo: 'bar' })).to.equal(false);
       });
     });
+
     describe('isFunction', () => {
       it('Should return false on mismatching parse tree', () => {
         expect(ParserHelpers.isFunction({ foo: 'bar' })).to.equal(false);
       });
     });
+
     describe('getParameters', () => {
       it('Should return empty array on mismatching parse tree', () => {
         expect(ParserHelpers.getParameters({ foo: 'bar' })).to.deep.equal([]);

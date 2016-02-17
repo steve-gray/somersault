@@ -91,6 +91,42 @@ __somersault__ allows the inputs for registration to be:
       - Arrow Functions (parameters as per functions)
       - ES6+ classes (Constructor parameters are resolved by tag/name).
 
+## Container Methods and Properties
+### .createChild()
+Create a child container/context that uses the specified container as a fallback/parent.
+
+    const childContainer = myContainer.createChild();
+
+### .build(funcArrowOrClass)
+Creates an instance of a class, or if a function/arrow-function, will execute the function and return
+it's value. The required parameters of the class constructor or function declaration are filled in using
+the container registrations.
+
+    const myObject = myContainer.build(SomeClass);
+
+### .parent
+Returns the parent container of a container context.
+
+    const myParent = myContainer.parent;
+
+### .register(tag|tags, value)
+Register a value with the container. Value can be any of:
+  - Arrow Function
+  - Class
+  - Function
+
+Classes are generated as new instances of the class *on-demand*, however arrows and functions
+are simply evaluated during resolution/build and returned. If you need to use prototypes or
+functions, register a 'generator' function to avoid problems around usage of `this`.
+
+    myContainer.register('someTag', MyClassHere);
+    myContainer.register(['can','have','many','tags'], function (foo) { ... });
+    myContainer.register('generator', (x, y, z) => new PrototypeNameHere(x, y, z));
+
+### .resolve(tag)
+Produces the most recently registered tag value (and completes dependencies, if required). The tag value
+must match a tag used during registration.
+
 ## Advanced Usage
 ### Nested Dependencies
 The `somersault` package will resolve dependencies, and then dependencies of those
@@ -102,24 +138,9 @@ Each specific dependency is only built __once__ per resolve/build operation. It 
 that the same instance/value can be passed to each object in a graph requiring a specific
 dependency to be resolved.
 
-### Recursive Dependencies
-Due to the nature of how we handle repeated-dependencies, this permits nested dependencies
-where you can have:
-
-    Class A: ctor(B)
-    Class B: ctor(A)
-
-You can thus perform a `.build(A)` and have it satisfied, though because we cannot build the
-first A until we've built an A *and* a B, this means you technically end up with a second A as
-your root object.
-
-
 # Feature Roadmap
 The following features are high priorities for future releases:
 
-  - Ability to nest containers
-  - Implicit $container self-referencing for passing somersault instances down to
-    child contexts.
   - Ability to create filtered sub-containers (i.e. container.filter('someTag'))
       - This allows registration of multiple conflicting names, but still resolving specific names later.
   - Ability to enumerate all instances of a tag (i.e. .resolverAll('tag'))

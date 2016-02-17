@@ -49,6 +49,11 @@ function functionWithDependencies(noDepsArrow) {
   return noDepsArrow + 4;
 }
 
+function functionWithContainerDep($container) {
+  expect($container).to.not.equal(null);
+  return $container;
+}
+
 class RootClass {
   constructor(depsClass, depsArrow, depsFunction) {
     if (!depsClass) {
@@ -71,8 +76,13 @@ class RootClass {
 
 describe('Container', () => {
   describe('Construction', () => {
-    it('Should fail when parent is not a container or null', () => {
+    it('Should fail when parent is not a container (and is not null)', () => {
       expect(() => lib.createContainer({ foo: 'bar' })).to.throw(Error);
+    });
+    it('Should accept a parameter for the parent container', () => {
+      const parent = lib.createContainer();
+      const child = lib.createContainer(parent);
+      expect(child.parent).to.equal(parent);
     });
   });
 
@@ -89,6 +99,13 @@ describe('Container', () => {
       );
     });
 
+    describe('createChild()', () => {
+      it('Should create a child container that is not a self reference', () => {
+        const child = container.createChild();
+        expect(child).to.not.equal(container);
+      });
+    });
+
     describe('register(tags, value)', () => {
       describe('Parameter validation', () => {
         it('Should error with no tags specified', () => {
@@ -96,9 +113,6 @@ describe('Container', () => {
         });
         it('Should error with no generator/value specified', () => {
           expect(() => container.register('someTag', null)).to.throw(Error);
-        });
-        it('Should error with non-class/func/arrow generator specified', () => {
-          expect(() => container.register('someTag', true)).to.throw(Error);
         });
         it('Should allow tag registration with string', () => {
           container.register('someTag', ClassNoDependencies);
@@ -162,8 +176,30 @@ describe('Container', () => {
 
     describe('resolve(tag)', () => {
       describe('Simple resolver tests', () => {
+        it('Should throw an exception when tag is null', () => {
+          expect(() => container.resolve()).to.throw(Error);
+        });
+
         it('Should throw an exception when tag is unknown', () => {
           expect(() => container.resolve('no_such_tag')).to.throw(Error);
+        });
+
+        it('Should resolve simple constant value', () => {
+          const instance = {
+            foo: 'bar',
+            deep: {
+              propName: 'propValue',
+            },
+          };
+          container.register('directObject', instance);
+          const result = container.resolve('directObject').deep.propName;
+          expect(result).to.equal('propValue');
+        });
+
+        it('Should resolve properties named $container to a container instance', () => {
+          container.register('needsContainer', functionWithContainerDep);
+          const result = container.resolve('needsContainer');
+          expect(result).to.equal(container);
         });
 
         it('Should resolve simple/argless class', () => {
@@ -196,6 +232,18 @@ describe('Container', () => {
           container.register('depsFunction', functionWithDependencies);
           container.register('noDepsArrow', arrowNoDependencies);
           const result = container.resolve('depsFunction');
+          expect(result).to.equal(5);
+        });
+
+        it('Should resolve value from parent context', () => {
+          const childContainer = container.createChild();
+          container.register('depsFunction', functionWithDependencies);
+          childContainer.register('noDepsArrow', arrowNoDependencies);
+
+          // This test checks that we are also passing the initial 'resolver' as a root
+          // resolver context around. In other words: we can complete parents with
+          // values only set at a child level.
+          const result = childContainer.resolve('depsFunction');
           expect(result).to.equal(5);
         });
       });
