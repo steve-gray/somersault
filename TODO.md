@@ -1,5 +1,5 @@
-- Replace regex work with esprima parsing of code.
+- Parent container support
+- Tag-filtering of containers to create subcontainer.
+- Implicit '$container' resolver parameter.
 - Caching of built objects in a 'context' that allows for graceful recursive defs.
-- Test coverage of input validation scenarios.
-- Move private functions out of public container class.
 - ES3/5 transpile with babel.
