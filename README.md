@@ -114,6 +114,7 @@ Register a value with the container. Value can be any of:
   - Arrow Function
   - Class
   - Function
+  - Any other value (assumed to be a singleton/constant-value).
 
 Classes are generated as new instances of the class *on-demand*, however arrows and functions
 are simply evaluated during resolution/build and returned. If you need to use prototypes or
@@ -122,6 +123,7 @@ functions, register a 'generator' function to avoid problems around usage of `th
     myContainer.register('someTag', MyClassHere);
     myContainer.register(['can','have','many','tags'], function (foo) { ... });
     myContainer.register('generator', (x, y, z) => new PrototypeNameHere(x, y, z));
+    myContainer.register('config', { someKey: 'value' });
 
 ### .resolve(tag)
 Produces the most recently registered tag value (and completes dependencies, if required). The tag value
