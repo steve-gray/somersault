@@ -4,11 +4,13 @@
   "description": "Example app showing somersault IoC",
   "main": "simple.js",
   "scripts": {
+    "start": "node simple.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Steve Gray",
   "license": "MIT",
   "dependencies": {
-    "esprima": "^2.7.2"
+    "esprima": "^2.7.2",
+    "somersault": "0.0.3"
   }
 }

@@ -1,15 +1,15 @@
 'use strict';
 
-const somersault = require('../../lib');
-
-const container = somersault.createContainer();
-
-container.register('database', class Database {
+class Database {
   constructor(connectionString) {
     console.log('Built database class with %s', connectionString);
     this.connectionStringValue = connectionString;
   }
-});
+};
+
+const container = require('somersault').createContainer();
+
+container.register('database', Database);
 container.register('connectionString', 'someConnectionString');
 
 const result = container.resolve('database');
