@@ -1,5 +1,4 @@
 - Parent container support
 - Tag-filtering of containers to create subcontainer.
 - Implicit '$container' resolver parameter.
-- Caching of built objects in a 'context' that allows for graceful recursive defs.
 - ES3/5 transpile with babel.
