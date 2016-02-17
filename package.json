@@ -1,6 +1,6 @@
 {
   "name": "somersault",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Simple framework for Inversion of Control in NodeJS",
   "main": "index.js",
   "scripts": {
