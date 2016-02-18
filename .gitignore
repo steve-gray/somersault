@@ -37,3 +37,9 @@ tst/**/output
 
 # Documentation
 docs
+
+# VSCode
+.vscode
+
+# OSX Finder
+.DS_Store
