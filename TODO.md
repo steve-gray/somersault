@@ -1,4 +1,1 @@
-- Parent container support
-- Tag-filtering of containers to create subcontainer.
-- Implicit '$container' resolver parameter.
 - ES3/5 transpile with babel.

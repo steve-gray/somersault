@@ -1,6 +1,6 @@
 {
   "name": "somersault",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Simple framework for Inversion of Control in NodeJS",
   "main": "index.js",
   "scripts": {
@@ -12,14 +12,12 @@
   },
   "keywords": [
     "ioc",
+    "es6",
+    "injection",
     "inversion",
-    "of",
-    "control",
     "dependency",
     "injection",
-    "di",
     "framework",
-    "es6",
     "ECMAScript6",
     "es2015"
   ],
