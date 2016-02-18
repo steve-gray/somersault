@@ -263,5 +263,38 @@ describe('Container', () => {
         });
       });
     });
+
+    describe('resolveAll(tag)', () => {
+      it('Should throw when no tag specified', () => {
+        expect(() => {
+          container.resolveAll(null);
+        }).to.throw(Error);
+      });
+
+      it('Should throw when no tag registrations matched', () => {
+        expect(() => {
+          container.resolveAll('invalidTag');
+        }).to.throw(Error);
+      });
+
+      it('Should resolve multiple implementations', () => {
+        container.register('tagName', () => 3);
+
+        // Create a child
+        const child = container.createChild();
+        child.register('tagName', () => 1);
+
+        // Put another in the parent
+        container.register('tagName', () => 2);
+
+        // Child resolve
+        const childResolved = child.resolveAll('tagName');
+        expect(childResolved).to.deep.equal([1, 2, 3]);
+
+        // Parent resolve
+        const parentResolved = container.resolveAll('tagName');
+        expect(parentResolved).to.deep.equal([2, 3]);
+      });
+    });
   });
 });

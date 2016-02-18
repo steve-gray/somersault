@@ -129,6 +129,21 @@ functions, register a 'generator' function to avoid problems around usage of `th
 Produces the most recently registered tag value (and completes dependencies, if required). The tag value
 must match a tag used during registration.
 
+    const myInstance = myContainer.resolve('someTag');
+    myInstance.doSomething();
+
+### .resolveAll(tag)
+Produces an instance of all instances of the specified tag registration in the container hierarchy all the
+way to the root.
+
+    const myWidgets = myContainer.resolveAll('widget');
+    for (const widget of myWidgets) {
+      widget.frob();
+    }
+
+Registrations are returned in most-recent registration order _ascending_ through the hierarchy,
+so more recent registrations from parents appear after oldest child registrations.
+
 ## Advanced Usage
 ### Nested Dependencies
 The `somersault` package will resolve dependencies, and then dependencies of those
