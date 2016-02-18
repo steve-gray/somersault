@@ -104,6 +104,23 @@ the container registrations.
 
     const myObject = myContainer.build(SomeClass);
 
+### .filterAny(tag|tags)
+Creates a child container that will only include any registrations that match the nominated tag (or any
+of a list of nominated tags). This allows filtering down to a subset where registrations have multiple
+tags that group them:
+
+    // Register connection settings for environments
+    container.register(['connectionString', 'QA'], 'foo=bar');
+    container.register(['connectionString', 'UAT'], 'foo=waa');
+
+    // Filter
+    const filteredChild = container.filterAny('QA');
+    // filteredChild will now only resolve registrations that include a QA tag.
+
+This filter applies to the current container and all upstream registrations in the hierarchy, but does
+not modify results returned from references to the original container. Filter operations can be chained
+to create composed behaviours.
+
 ### .filterOut(tag|tags)
 Creates a child container that will exclude any dependencies that have the nominated tag or tags array
 assigned to them. This allows hiding of certain groups of dependencies in child containers.
@@ -119,8 +136,9 @@ assigned to them. This allows hiding of certain groups of dependencies in child 
     const filteredChild = container.filterOut('excludeMe');
     // Will now be 1 (because excludeMe is hidden)
 
-A filter hides all dependencies with the nominated tag/tags, no matter
-where they are in the parent container hierarchy.
+This filter hides all dependencies with the nominated tag/tags, no matter
+where they are in the parent container hierarchy. Filter operations can be chained
+to create composed behaviours.
 
 ### .parent
 Returns the parent container of a container context.

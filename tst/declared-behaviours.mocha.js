@@ -333,6 +333,49 @@ describe('Container', () => {
           expect(filteredChild.resolve('someTag')).to.equal(1);
         });
       });
-    });
+    }); // filterOut
+
+    describe('filterAny', () => {
+      describe('Input validation', () => {
+        it('Should throw when no tag specified', () => {
+          expect(() => {
+            container.filterAny(null);
+          }).to.throw(Error);
+        });
+      });
+
+      describe('behaviours', () => {
+        it('Should filter to expected items (string)', () => {
+          // Register a tag, then overload it
+          container.register(['someTag', 'mustHave'], 1);
+          container.register(['someTag'], -1);
+
+          // Initial result is -1
+          expect(container.resolve('someTag')).to.equal(-1);
+
+          // Resolve from filtered child
+          const filteredChild = container.filterAny('mustHave');
+          expect(filteredChild.resolve('someTag')).to.equal(1);
+        });
+
+        it('Should filter to expected items (array)', () => {
+          // Register a tag, then overload it
+          container.register(['someTag', 'optionA'], 1);
+          container.register(['someTag', 'optionB'], 2);
+          container.register(['someTag', 'optionC'], -1);
+
+          // Initial result is -1
+          expect(container.resolve('someTag')).to.equal(-1);
+
+          // Resolve from filtered child
+          const filteredChild = container.filterAny(['optionA', 'optionB']);
+          expect(filteredChild.resolve('someTag')).to.equal(2);
+
+          // resolveAll should return 2, 1
+          const array = filteredChild.resolveAll('someTag');
+          expect(array).to.deep.equal([2, 1]);
+        });
+      });
+    }); // filterOut
   });
 });

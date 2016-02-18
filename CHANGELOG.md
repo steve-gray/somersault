@@ -2,7 +2,8 @@
 
 ## Version 0.0.5 - Various Improvements
 - Added `.resolveAll(tag|tags)` command to resolve an array of inputs.
-- Added `.filterOut(tag|tags)` command to create child container that excludes any registrations matching the nominated tag.
+- Added `.filterAny(tag|tags)` command to create child container that only includes registrations matching any of the nominated tag(s).
+- Added `.filterOut(tag|tags)` command to create child container that excludes any registrations matching any of the nominated tag(s).
 
 ## Version 0.0.3 - Various Improvements
 - `$container` parameter on a generator/value now injects a dynamically created child container into the object/function being built.
