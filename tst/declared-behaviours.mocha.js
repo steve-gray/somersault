@@ -295,6 +295,44 @@ describe('Container', () => {
         const parentResolved = container.resolveAll('tagName');
         expect(parentResolved).to.deep.equal([2, 3]);
       });
+    }); // resolveAll
+
+    describe('filterOut', () => {
+      describe('Input validation', () => {
+        it('Should throw when no tag specified', () => {
+          expect(() => {
+            container.filterOut(null);
+          }).to.throw(Error);
+        });
+      });
+      describe('behaviours', () => {
+        it('Should exclude expected items (string)', () => {
+          // Register a tag, then overload it
+          container.register(['someTag'], 1);
+          container.register(['someTag', 'excludeMe'], -1);
+
+          // Initial result is -1
+          expect(container.resolve('someTag')).to.equal(-1);
+
+          // Resolve from filtered child
+          const filteredChild = container.filterOut('excludeMe');
+          expect(filteredChild.resolve('someTag')).to.equal(1);
+        });
+
+        it('Should exclude expected items (array)', () => {
+          // Register a tag, then overload it
+          container.register(['someTag'], 1);
+          container.register(['someTag', 'excludeMe'], -2);
+          container.register(['someTag', 'alsoMe'], -1);
+
+          // Initial result is -1
+          expect(container.resolve('someTag')).to.equal(-1);
+
+          // Resolve from filtered child
+          const filteredChild = container.filterOut(['excludeMe', 'alsoMe']);
+          expect(filteredChild.resolve('someTag')).to.equal(1);
+        });
+      });
     });
   });
 });

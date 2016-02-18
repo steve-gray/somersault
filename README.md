@@ -104,6 +104,24 @@ the container registrations.
 
     const myObject = myContainer.build(SomeClass);
 
+### .filterOut(tag|tags)
+Creates a child container that will exclude any dependencies that have the nominated tag or tags array
+assigned to them. This allows hiding of certain groups of dependencies in child containers.
+
+    // Register a tag, then overload it
+    container.register(['someTag'], 1);
+    container.register(['someTag', 'excludeMe'], -1);
+
+    // Initial result is -1
+    const firstResult = container.resolve('someTag');
+
+    // Resolve from filtered child
+    const filteredChild = container.filterOut('excludeMe');
+    // Will now be 1 (because excludeMe is hidden)
+
+A filter hides all dependencies with the nominated tag/tags, no matter
+where they are in the parent container hierarchy.
+
 ### .parent
 Returns the parent container of a container context.
 

@@ -1,5 +1,9 @@
 # somersault change log
 
+## Version 0.0.5 - Various Improvements
+- Added `.resolveAll(tag|tags)` command to resolve an array of inputs.
+- Added `.filterOut(tag|tags)` command to create child container that excludes any registrations matching the nominated tag.
+
 ## Version 0.0.3 - Various Improvements
 - `$container` parameter on a generator/value now injects a dynamically created child container into the object/function being built.
 - Support for container chaining. Pass an existing container to `.createContainer(parent)` or simply call `.createChild()` on an existing container.
