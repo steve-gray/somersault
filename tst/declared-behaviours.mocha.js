@@ -335,6 +335,48 @@ describe('Container', () => {
       });
     }); // filterOut
 
+    describe('filterAll', () => {
+      describe('Input validation', () => {
+        it('Should throw when no tag specified', () => {
+          expect(() => {
+            container.filterAll(null);
+          }).to.throw(Error);
+        });
+      });
+      describe('behaviours', () => {
+        it('Should only include expected items (string)', () => {
+          // Register a tag, then overload it
+          container.register(['someTag', 'requireMe'], 1);
+          container.register(['someTag'], -1);
+
+          // Initial result is -1
+          expect(container.resolve('someTag')).to.equal(-1);
+
+          // Resolve from filtered child
+          const filteredChild = container.filterAll('requireMe');
+          expect(filteredChild.resolve('someTag')).to.equal(1);
+        });
+
+        it('Should include expected items (array)', () => {
+          // Register a tag, then overload it
+          container.register(['someTag'], -1);
+          container.register(['someTag', 'requireMe'], -2);
+          container.register(['someTag', 'andMe'], -3);
+          container.register(['someTag', 'requireMe', 'andMe'], 1);
+          container.register(['someTag', 'requireMe'], -4);
+          container.register(['someTag', 'andMe'], -5);
+          container.register(['someTag'], -6);
+
+          // Initial result is -1
+          expect(container.resolve('someTag')).to.equal(-6);
+
+          // Resolve from filtered child
+          const filteredChild = container.filterAll(['requireMe', 'andMe']);
+          expect(filteredChild.resolve('someTag')).to.equal(1);
+        });
+      });
+    }); // filterAll
+
     describe('filterAny', () => {
       describe('Input validation', () => {
         it('Should throw when no tag specified', () => {

@@ -6,8 +6,8 @@
 [![Code Coverage](https://coveralls.io/repos/github/steve-gray/somersault/badge.svg?branch=master)](https://coveralls.io/github/steve-gray/somersault)
 [![npm version](https://badge.fury.io/js/somersault.svg)](https://badge.fury.io/js/somersault)
 
-![Stats]( https://nodei.co/npm/somersault.png?downloads=true&downloadRank=true&stars=true)
-![Downloads](https://nodei.co/npm-dl/somersault.png?height=2)
+[![Stats](https://nodei.co/npm/somersault.png?downloads=true&downloadRank=true&stars=true)](https://npmjs.com/package/somersault)
+[![Downloads](https://nodei.co/npm-dl/somersault.png?height=2)](https://npmjs.com/package/somersault)
 
 ## Summary
 somersault is a simple and flexible IoC solution for NodeJS (4.x+) projects that allows you to
@@ -103,6 +103,25 @@ it's value. The required parameters of the class constructor or function declara
 the container registrations.
 
     const myObject = myContainer.build(SomeClass);
+
+### .filterAll(tag|tags)
+Creates a child container that will only include any registrations that match the nominated tag (or ALL
+of a list of nominated tags). This allows filtering down to a subset where registrations have multiple
+tags that combine to provide grouping:
+
+    // Register connection settings for environments
+    container.register(['connectionString', 'QA', 'serverA'], 'foo=bar1');
+    container.register(['connectionString', 'QA', 'serverB'], 'foo=bar2');
+    container.register(['connectionString', 'UAT', 'serverA'], 'foo=waa1');
+    container.register(['connectionString', 'UAT', 'serverB'], 'foo=waa2');
+
+    // Filter
+    const filteredChild = container.filterAll(['QA', 'serverB']);
+    // filteredChild will now only resolve connectionString = foo=bar2
+
+This filter applies to the current container and all upstream registrations in the hierarchy, but does
+not modify results returned from references to the original container. Filter operations can be chained
+to create composed behaviours.
 
 ### .filterAny(tag|tags)
 Creates a child container that will only include any registrations that match the nominated tag (or any

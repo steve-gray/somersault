@@ -1,5 +1,8 @@
 # somersault change log
 
+## Version 0.0.x - Various Improvements
+- Added `.filterAll(tag|tags)` command to create child container that only includes registrations matching all of the nominated tag(s).
+
 ## Version 0.0.5 - Various Improvements
 - Added `.resolveAll(tag|tags)` command to resolve an array of inputs.
 - Added `.filterAny(tag|tags)` command to create child container that only includes registrations matching any of the nominated tag(s).
