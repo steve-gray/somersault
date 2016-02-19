@@ -209,11 +209,3 @@ complex object graphs to be satisfied easily.
 Each specific dependency is only built __once__ per resolve/build operation. It assumed
 that the same instance/value can be passed to each object in a graph requiring a specific
 dependency to be resolved.
-
-# Feature Roadmap
-The following features are high priorities for future releases:
-
-  - Ability to create filtered sub-containers (i.e. container.filter('someTag'))
-      - This allows registration of multiple conflicting names, but still resolving specific names later.
-  - Ability to enumerate all instances of a tag (i.e. .resolverAll('tag'))
-  - ES3/5 Transpile via Babel
