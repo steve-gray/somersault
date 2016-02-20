@@ -104,6 +104,20 @@ the container registrations.
 
     const myObject = myContainer.build(SomeClass);
 
+#### Overload .build(funcArrowOrClass, constructorTags)
+Creates an instance of a class or executes a function/arrow, but remaps the detected names of the 
+parameters to use alternate tags when resolving. This allows for consumption of types that do not
+have suitable IoC focused names that match pre-existing registrations:
+
+      function myGenerator(someInstance, someFunc) {
+        return someInstance.value + someFunc.value;
+      }    
+      const instance = container.build(myGenerator,
+        ['alternateClass', 'alternateFunc']);
+
+In this example the arguments someInstance and someFunc are resolved as if they'd been written with
+the overridden names.
+
 ### .filterAll(tag|tags)
 Creates a child container that will only include any registrations that match the nominated tag (or ALL
 of a list of nominated tags). This allows filtering down to a subset where registrations have multiple

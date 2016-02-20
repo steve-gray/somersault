@@ -143,6 +143,10 @@ describe('Container', () => {
         it('Should fail with a non-(func/class/arrow) generator', () => {
           expect(() => container.build({ foo: 'bar' })).to.throw(Error);
         });
+        it('Should fail with non-array constructorTags', () => {
+          container.register('noDepsArrow', arrowNoDependencies);
+          expect(() => container.build(functionWithDependencies, 1234)).to.throw(Error);
+        });
       });
 
       describe('arrow functions', () => {
@@ -180,6 +184,19 @@ describe('Container', () => {
           container.register('noDepsFunction', functionNoDependencies);
           const instance = container.build(ClassWithDependencies);
           expect(instance.value).to.equal(7);
+        });
+      });
+
+      describe('Overloads', () => {
+        it('Should allow remapping of dependency names with extra argument', () => {
+          function myGenerator(someInstance, someFunc) {
+            return someInstance.value + someFunc.value;
+          }
+          container.register('alternateClass', ClassNoDependencies);    // Returns 2
+          container.register('alternateFunc', functionNoDependencies);  // Returns 3
+          const instance = container.build(myGenerator,
+            ['alternateClass', 'alternateFunc']);
+          expect(instance).to.equal(5);
         });
       });
     });

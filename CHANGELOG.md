@@ -3,6 +3,7 @@
 ## Version 0.0.x - Various Improvements
 - Added `.filterAll(tag|tags)` command to create child container that only includes registrations matching all of the nominated tag(s).
 - Added `.register(tag|tags, generator, alternateParams)` overload to .register allowing for override of argument names to functions/classes.
+- Added `.build(generator, alternateParams)` overload to .build allowing for override of argument names on generator.
 
 ## Version 0.0.5 - Various Improvements
 - Added `.resolveAll(tag|tags)` command to resolve an array of inputs.
