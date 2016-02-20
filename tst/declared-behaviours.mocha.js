@@ -106,7 +106,7 @@ describe('Container', () => {
       });
     });
 
-    describe('register(tags, value)', () => {
+    describe('register(tags, value{, constructorTags})', () => {
       describe('Parameter validation', () => {
         it('Should error with no tags specified', () => {
           expect(() => container.register(null, ClassNoDependencies)).to.throw(Error);
@@ -121,6 +121,16 @@ describe('Container', () => {
           container.register(['someTag', 'anotherTag'], ClassNoDependencies);
           expect(container.resolve('someTag')).to.not.equal(null);
           return expect(container.resolve('anotherTag')).to.exist;
+        });
+        it('Should allow override of argument names', () => {
+          container.register(['someTag'], functionWithDependencies, ['alternateName']);
+          container.register(['alternateName'], arrowNoDependencies);
+          expect(container.resolve('someTag')).to.equal(5);
+        });
+        it('Should require constructorTags to be an array', () => {
+          expect(() => {
+            container.register(['someTag'], functionWithDependencies, 1234);
+          }).to.throw(Error);
         });
       });
     });

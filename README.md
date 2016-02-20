@@ -180,6 +180,15 @@ functions, register a 'generator' function to avoid problems around usage of `th
     myContainer.register('generator', (x, y, z) => new PrototypeNameHere(x, y, z));
     myContainer.register('config', { someKey: 'value' });
 
+#### Overload: .register(tag|tags, value, constructorTags)
+It is possible to override the detection of parameter names on a function, arrow and class by passing
+a third parameter to register() - an array of alternate parameter/tag names.
+
+    myContainer.register(['can','have','many','tags'], function (foo, bar) { ... }, ['hello', 'world']);
+
+In this example, any attempt to .resolve('tag') will now act as if function was function (hello, world)
+and resolve _those_ parameter names instead.
+
 ### .resolve(tag)
 Produces the most recently registered tag value (and completes dependencies, if required). The tag value
 must match a tag used during registration.
