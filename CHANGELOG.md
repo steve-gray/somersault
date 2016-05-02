@@ -1,5 +1,13 @@
 # somersault change log
 
+## Version 1.0.0
+Because it's probably quite done/stable and ready for the real world.
+- Refactored .createChild to become .createContainer to match parent/child method names.
+- Changed module to have function() return value, so simple example becomes:
+      const container = require('somersault')();
+      container.register('tag', object|class|func);
+- Fixed up ES/JSDoc tags.
+
 ## Version 0.0.x - Various Improvements
 - Added `.filterAll(tag|tags)` command to create child container that only includes registrations matching all of the nominated tag(s).
 - Added `.register(tag|tags, generator, alternateParams)` overload to .register allowing for override of argument names to functions/classes.
