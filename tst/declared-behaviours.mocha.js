@@ -99,9 +99,15 @@ describe('Container', () => {
       );
     });
 
-    describe('createChild()', () => {
+    describe('createChild() (Deprecated)', () => {
       it('Should create a child container that is not a self reference', () => {
         const child = container.createChild();
+        expect(child).to.not.equal(container);
+      });
+    });
+    describe('createContainer()', () => {
+      it('Should create a child container that is not a self reference', () => {
+        const child = container.createContainer();
         expect(child).to.not.equal(container);
       });
     });
@@ -263,7 +269,7 @@ describe('Container', () => {
         });
 
         it('Should resolve value from parent context', () => {
-          const childContainer = container.createChild();
+          const childContainer = container.createContainer();
           container.register('depsFunction', functionWithDependencies);
           childContainer.register('noDepsArrow', arrowNoDependencies);
 
@@ -308,7 +314,7 @@ describe('Container', () => {
         container.register('tagName', () => 3);
 
         // Create a child
-        const child = container.createChild();
+        const child = container.createContainer();
         child.register('tagName', () => 1);
 
         // Put another in the parent

@@ -92,7 +92,7 @@ __somersault__ allows the inputs for registration to be:
       - ES6+ classes (Constructor parameters are resolved by tag/name).
 
 ## Container Methods and Properties
-### .createChild()
+### .createContainer()
 Create a child container/context that uses the specified container as a fallback/parent.
 
     const childContainer = myContainer.createChild();
