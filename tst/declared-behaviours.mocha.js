@@ -76,13 +76,21 @@ class RootClass {
 
 describe('Container', () => {
   describe('Construction', () => {
-    it('Should fail when parent is not a container (and is not null)', () => {
-      expect(() => lib.createContainer({ foo: 'bar' })).to.throw(Error);
+    describe('.createContainer() on library', () => {
+      it('Should fail when parent is not a container (and is not null)', () => {
+        expect(() => lib.createContainer({ foo: 'bar' })).to.throw(Error);
+      });
+      it('Should accept a parameter for the parent container', () => {
+        const parent = lib.createContainer();
+        const child = lib.createContainer(parent);
+        expect(child.parent).to.equal(parent);
+      });
     });
-    it('Should accept a parameter for the parent container', () => {
-      const parent = lib.createContainer();
-      const child = lib.createContainer(parent);
-      expect(child.parent).to.equal(parent);
+    describe('require(somersault)()', () => {
+      it('Should succeed when invoking via require constructor function', () => {
+        const container = lib();
+        expect(typeof container.resolve).to.equal('function');
+      });
     });
   });
 
