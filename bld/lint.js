@@ -12,10 +12,11 @@ module.exports = function runLinting() {
       modules: false,
     },
     rules: {      
-      strict: [2, 'global'],
+      strict: [0, 'global'],
     },
     env: {
       es6: true,
+      node: true,
     },
   }))
   .pipe(eslint.format(config.get('build.linting.formatter')))

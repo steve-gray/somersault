@@ -9,7 +9,7 @@ module.exports = function runLinting() {
   .pipe(eslint({
     extends: 'airbnb',
     rules: {
-      strict: [2, 'global'],
+      strict: [0, 'global'],
     },
     ecmaFeatures: {
       modules: false,
@@ -17,6 +17,7 @@ module.exports = function runLinting() {
     env: {
       es6: true,
       mocha: true,
+      node: true,
     },
   }))
   .pipe(eslint.format(config.get('build.linting.formatter')))
