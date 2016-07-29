@@ -1,14 +1,10 @@
 pipeline:
   install_npm_packages:
     image: node:${NODE_VERSION}
-    environment:
-      - NPM_CONFIG_REGISTRY=http://npm.eventualconsistency.net/
     commands:
       - npm install
   run_unit_tests:
     image: node:${NODE_VERSION}
-    environment:
-      - NPM_CONFIG_REGISTRY=http://npm.eventualconsistency.net/
     commands:
       - npm install gulp -g
       - gulp
@@ -26,9 +22,6 @@ pipeline:
 matrix:
   NODE_VERSION:
     - latest
-    - 6.3
-    - 6.0
-    - 5.5
-    - 5.2
-    - 4.1
-    - 4.0
+    - 6
+    - 5
+    - 4
