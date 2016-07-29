@@ -289,6 +289,7 @@ describe('Container', () => {
         });
       });
 
+      describe('resolveAll')
       describe('Nightmare Scenario', () => {
         it('Should correctly add up', () => {
           container.register('rootClass', RootClass);                     // Complex class
