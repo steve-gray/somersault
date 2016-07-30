@@ -22,7 +22,7 @@ pipeline:
         NODE_VERSION: 6
 
   publish:
-    image: npm
+    image: plugins/npm
     registry: https://registry.npmjs.org
     when:
       event: tag
