@@ -16,10 +16,12 @@ pipeline:
       - git config --global user.name "Drone CI"
       - git config --global user.email "drone@eventualconsistency.net"
       - npm version ${DRONE_TAG} || true
+      - git add package.json
+      - 'git commit -m "[SKIPCI] NPM Version @ ${DRONE_TAG}"'
     when:
       event: tag
       matrix:
-        NODE_VERSION: 6.0
+        NODE_VERSION: 6
 
   publish:
     image: npm
@@ -27,11 +29,8 @@ pipeline:
     when:
       event: tag
       matrix:
-        NODE_VERSION: 6.0
+        NODE_VERSION: 6
 
 matrix:
   NODE_VERSION:
-    - latest
     - 6
-    - 5
-    - 4
