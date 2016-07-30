@@ -33,4 +33,7 @@ pipeline:
 
 matrix:
   NODE_VERSION:
+    - latest
     - 6
+    - 5
+    - 4
