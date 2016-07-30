@@ -3,17 +3,26 @@ pipeline:
     image: node:${NODE_VERSION}
     commands:
       - npm install --quiet --loglevel warning
+
   run_unit_tests:
     image: node:${NODE_VERSION}
     commands:
       - npm install gulp -g --quiet --loglevel warning
       - gulp
+
   apply_npm_version:
     image: node:${NODE_VERSION}
     commands:
       - git config --global user.name "Drone CI"
       - git config --global user.email "drone@eventualconsistency.net"
       - npm version ${DRONE_TAG} || true
+    when:
+      event: tag
+      matrix:
+        NODE_VERSION: 6.0
+
+  npm:
+    registry: https://registry.npmjs.org
     when:
       event: tag
       matrix:
