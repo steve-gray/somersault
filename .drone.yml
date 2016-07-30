@@ -21,7 +21,8 @@ pipeline:
       matrix:
         NODE_VERSION: 6.0
 
-  npm:
+  publish:
+    image: npm
     registry: https://registry.npmjs.org
     when:
       event: tag
