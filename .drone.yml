@@ -16,8 +16,6 @@ pipeline:
       - git config --global user.name "Drone CI"
       - git config --global user.email "drone@eventualconsistency.net"
       - npm version ${DRONE_TAG} || true
-      - git add package.json
-      - 'git commit -m "[SKIPCI] NPM Version @ ${DRONE_TAG}"'
     when:
       event: tag
       matrix:
