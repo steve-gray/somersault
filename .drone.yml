@@ -21,8 +21,7 @@ pipeline:
       matrix:
         NODE_VERSION: 6
 
-  publish:
-    image: plugins/drone-npm
+  npm:
     when:
       event: tag
       matrix:
