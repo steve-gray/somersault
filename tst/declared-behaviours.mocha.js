@@ -8,11 +8,14 @@ const lib = require('../lib');
 
 const arrowNoDependencies = () => 1;
 
+const nestedArrow = () => () => 1;
+
 class ClassNoDependencies {
   constructor() {
     this.value = 2;
   }
 }
+const arrowGenerator = () => ClassNoDependencies;
 
 function functionNoDependencies() {
   return {
@@ -169,12 +172,26 @@ describe('Container', () => {
           expect(instance).to.equal(1);
         });
 
+        it('from nested arrow', () => {
+          container.register('nestedArrow', nestedArrow);
+          const instance = container.resolve('nestedArrow');
+          expect(instance()).to.eql(1);
+        });
+
+        it('from nested arrow (Class)', () => {
+          container.register('arrowGenerator', arrowGenerator);
+          const SomeClass = container.resolve('arrowGenerator');
+          expect(SomeClass).to.eql(ClassNoDependencies);
+        });
+
+
         it('from template (arguments)', () => {
           container.register('noDepsFunction', functionNoDependencies);
           const instance = container.build(arrowWithDependencies);
           expect(instance).to.equal(9);
         });
       });
+
       describe('regular functions', () => {
         it('from template (no arguments)', () => {
           const instance = container.build(functionNoDependencies);
