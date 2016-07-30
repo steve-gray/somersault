@@ -22,8 +22,7 @@ pipeline:
         NODE_VERSION: 6
 
   publish:
-    image: plugins/npm
-    registry: https://registry.npmjs.org
+    image: plugins/drone-npm
     when:
       event: tag
       matrix:
