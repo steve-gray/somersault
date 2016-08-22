@@ -4,8 +4,8 @@
 const chai = require('chai');
 const expect = chai.expect;
 const lib = require('../lib');
-
-
+const babelModuleType = require('./babel/class');
+const babelArrowModule = require('./babel/arrow');
 const arrowNoDependencies = () => 1;
 
 const nestedArrow = () => () => 1;
@@ -184,11 +184,15 @@ describe('Container', () => {
           expect(SomeClass).to.eql(ClassNoDependencies);
         });
 
-
         it('from template (arguments)', () => {
           container.register('noDepsFunction', functionNoDependencies);
           const instance = container.build(arrowWithDependencies);
           expect(instance).to.equal(9);
+        });
+
+        it('from babel ES6 module (arguments)', () => {
+          const instance = container.build(babelModuleType);
+          expect(instance.getCounter()).to.equal(1);
         });
       });
 
@@ -292,6 +296,19 @@ describe('Container', () => {
           const result = container.resolve('depsFunction');
           expect(result).to.equal(5);
         });
+
+        it('from babel ES6 module', () => {
+          container.register('babelModuleType', babelModuleType);
+          const instance = container.resolve('babelModuleType');
+          expect(instance.getCounter()).to.equal(1);
+        });
+
+        it('from babel ES6 arrow', () => {
+          container.register('babelArrowModule', babelArrowModule);
+          const instance = container.resolve('babelArrowModule');
+          expect(instance).to.equal(42);
+        });
+
 
         it('Should resolve value from parent context', () => {
           const childContainer = container.createContainer();

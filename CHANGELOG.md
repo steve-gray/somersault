@@ -1,5 +1,9 @@
 # somersault change log
 
+## Version 1.2.0
+Added support for ES6 module-syntax that is transpiled via Babel. This uses the presence of a
+__esModule attribute and the .default export.
+
 ## Version 1.0.0
 Because it's probably quite done/stable and ready for the real world.
 - Refactored .createChild to become .createContainer to match parent/child method names.
