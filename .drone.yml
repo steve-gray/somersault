@@ -19,6 +19,15 @@ pipeline:
       matrix:
         NODE_VERSION: 6
 
+  deploy_npm_package:
+    image: plugins/npm
+    username: steve-gray
+    email: eventsauce@cobaltsoftware.net
+    when:
+      event: tag
+      matrix:
+        NODE_VERSION: 6
+
 matrix:
   NODE_VERSION:
     - latest
