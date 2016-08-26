@@ -7,6 +7,12 @@ pipeline:
       - npm install
       - npm test
 
+  publish_coverage:
+    image: coverage
+    pattern: docs/code-coverage/lcov.info
+    server: https://aircover.eventualconsistency.net/
+    threshold: 95
+
   apply_npm_version:
     image: node:${NODE_VERSION}
     commands:
@@ -15,13 +21,9 @@ pipeline:
       - npm version ${DRONE_TAG} || true
     when:
       event: tag
-      matrix:
-        NODE_VERSION: 6
 
   deploy_npm_package:
     image: plugins/npm
-    username: steve-gray
-    email: eventsauce@cobaltsoftware.net
     when:
       event: tag
       matrix:
@@ -29,7 +31,4 @@ pipeline:
 
 matrix:
   NODE_VERSION:
-    - latest
     - 6
-    - 5
-    - 4
