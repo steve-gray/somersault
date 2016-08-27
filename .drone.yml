@@ -10,6 +10,7 @@ pipeline:
   publish_coverage:
     image: coverage
     debug: true
+    server: http://aircover.eventualconsistency.net
     pattern: docs/code-coverage/lcov.info
     threshold: 95
     commands:
