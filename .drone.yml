@@ -9,8 +9,8 @@ pipeline:
 
   publish_coverage:
     image: coverage
+    debug: true
     pattern: docs/code-coverage/lcov.info
-    server: http://aircover.eventualconsistency.net/
     threshold: 95
 
   apply_npm_version:
