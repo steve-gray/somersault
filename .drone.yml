@@ -10,6 +10,9 @@ pipeline:
   publish_coverage:
     image: plugins/coverage
     pattern: docs/code-coverage/lcov.info
+    when:
+      matrix:
+        NODE_VERSION: 6
 
   apply_npm_version:
     image: node:${NODE_VERSION}
@@ -29,4 +32,7 @@ pipeline:
 
 matrix:
   NODE_VERSION:
+    - 4
+    - 5
     - 6
+    - latest
