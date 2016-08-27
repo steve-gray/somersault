@@ -8,14 +8,11 @@ pipeline:
       - npm test
 
   publish_coverage:
-    image: coverage
+    image: plugins/coverage
     debug: true
     server: http://aircover.eventualconsistency.net
     pattern: docs/code-coverage/lcov.info
     threshold: 95
-    commands:
-      - env
-      - cat docs/code-coverage/lcov.info
 
   apply_npm_version:
     image: node:${NODE_VERSION}
