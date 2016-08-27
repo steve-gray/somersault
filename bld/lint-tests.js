@@ -11,8 +11,11 @@ module.exports = function runLinting() {
     rules: {
       strict: [0, 'global'],
     },
+    parserOptions: {
+      sourceType: 'module',
+    },
     ecmaFeatures: {
-      modules: false,
+      modules: true,
     },
     env: {
       es6: true,

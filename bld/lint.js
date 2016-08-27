@@ -9,9 +9,12 @@ module.exports = function runLinting() {
   .pipe(eslint({
     extends: 'airbnb',
     ecmaFeatures: {
-      modules: false,
+      modules: true,
     },
-    rules: {      
+    parserOptions: {
+      sourceType: 'module',
+    },
+    rules: {
       strict: [0, 'global'],
     },
     env: {
