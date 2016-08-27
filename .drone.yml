@@ -12,6 +12,9 @@ pipeline:
     debug: true
     pattern: docs/code-coverage/lcov.info
     threshold: 95
+    commands:
+      - env
+      - cat docs/code-coverage/lcov.info
 
   apply_npm_version:
     image: node:${NODE_VERSION}
