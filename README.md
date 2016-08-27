@@ -3,7 +3,7 @@
 [![Build Status](http://drone.eventualconsistency.net/api/badges/steve-gray/somersault/status.svg)](http://drone.eventualconsistency.net/steve-gray/somersault)
 [![Prod Dependencies](https://david-dm.org/steve-gray/somersault/status.svg)](https://david-dm.org/steve-gray/somersault)
 [![Dev Dependencies](https://david-dm.org/steve-gray/somersault/dev-status.svg)](https://david-dm.org/steve-gray/somersault#info=devDependencies)
-[![Code Coverage](https://coveralls.io/repos/github/steve-gray/somersault/badge.svg?branch=master)](https://coveralls.io/github/steve-gray/somersault)
+[![Code Coverage](http://aircover.eventualconsistency.net/badges/steve-gray/somersault/coverage.svg)](http://aircover.eventualconsistency.net/steve-gray/somersault)
 [![npm version](https://badge.fury.io/js/somersault.svg)](https://badge.fury.io/js/somersault)
 
 [![Stats](https://nodei.co/npm/somersault.png?downloads=true&downloadRank=true&stars=true)](https://npmjs.com/package/somersault)
