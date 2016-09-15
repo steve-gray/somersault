@@ -33,7 +33,7 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "config": "^1.21.0",
-    "coveralls": "^2.11.12",
+    "coveralls": "^2.11.13",
     "eslint": "^3.4.0",
     "eslint-config-airbnb": "^10.0.1",
     "eslint-plugin-import": "^1.14.0",
