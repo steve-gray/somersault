@@ -14,25 +14,24 @@ pipeline:
       matrix:
         NODE_VERSION: 6
 
-  apply_npm_version:
-    image: node:${NODE_VERSION}
-    commands:
-      - git config --global user.name "Drone CI"
-      - git config --global user.email "drone@eventualconsistency.net"
-      - npm version ${DRONE_TAG} || true
+  # Semantic versioning release control
+  run_semantique_self:
+    image: eventualconsistency/semantique
+    pull: true
     when:
-      event: tag
+      branch: master
+      event: push
 
-  deploy_npm_package:
+  # NPM Publishing on tagging from semantique
+  npm_publish:
     image: plugins/npm
     when:
       event: tag
-      matrix:
-        NODE_VERSION: 6
 
 matrix:
   NODE_VERSION:
     - 4
     - 5
     - 6
+    - 7
     - latest
