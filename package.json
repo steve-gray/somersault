@@ -11,7 +11,7 @@
     "url": "git+https://github.com/steve-gray/somersault.git"
   },
   "publishConfig": {
-    "registry": "https://registry.npmjs.org"
+    "registry": "https://registry.npmjs.org/"
   },
   "keywords": [
     "ioc",
