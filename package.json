@@ -43,7 +43,7 @@
     "gulp-esdoc": "^0.3.0",
     "gulp-eslint": "^3.0.1",
     "gulp-istanbul": "^1.1.1",
-    "gulp-mocha": "^3.0.1"
+    "gulp-mocha": "^4.0.1"
   },
   "engines": {
     "node": ">=4.0.0"
