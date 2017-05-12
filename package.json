@@ -40,7 +40,7 @@
     "eslint-plugin-jsx-a11y": "^2.2.3",
     "eslint-plugin-react": "^6.5.0",
     "gulp": "^3.9.1",
-    "gulp-esdoc": "^0.3.0",
+    "gulp-esdoc": "^0.4.1",
     "gulp-eslint": "^3.0.1",
     "gulp-istanbul": "^1.1.1",
     "gulp-mocha": "^3.0.1"
